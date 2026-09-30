@@ -7,9 +7,10 @@ function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [connected, setConnected] = useState(false); 
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io(SERVER_URL);
     socketRef.current = socket;
 
     socket.on("connect", () => setConnected(true));     
