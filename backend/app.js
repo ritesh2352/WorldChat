@@ -29,9 +29,9 @@ io.on('connection',(socket)=>{
   io.emit('message',{id:randomUUID(),text:clean})
   })
 })
-const PORT= process.env.PORT
+const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-  console.log(`app is running in port ${PORT}`);
-})
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
