@@ -1,0 +1,452 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+html {
+  overscroll-behavior: none;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  min-width: 320px;
+  color: #f8f7ff;
+  background:
+    radial-gradient(ellipse at 8% 12%, rgb(125 67 255 / 30%), transparent 34%),
+    radial-gradient(ellipse at 92% 76%, rgb(27 194 207 / 18%), transparent 32%),
+    linear-gradient(145deg, #111026 0%, #171634 48%, #101e32 100%);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overscroll-behavior: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 880px;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) 28px 0;
+  isolation: isolate;
+}
+
+.app::before,
+.app::after {
+  position: absolute;
+  z-index: -1;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  content: "";
+  filter: blur(70px);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.app::before {
+  top: 22%;
+  left: -150px;
+  background: #bc6cff;
+}
+
+.app::after {
+  right: -140px;
+  bottom: 16%;
+  background: #42d6dd;
+}
+
+.app-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 13px;
+  min-height: 94px;
+  padding: 12px 0;
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 15px;
+  background: linear-gradient(145deg, #a46cff, #6654e8 58%, #4d9be9);
+  box-shadow: 0 8px 30px rgb(124 88 255 / 30%);
+  transform: rotate(-5deg);
+}
+
+.brand-mark span {
+  width: 5px;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.brand-mark span:nth-child(1) {
+  height: 12px;
+  opacity: 0.72;
+}
+
+.brand-mark span:nth-child(2) {
+  height: 20px;
+}
+
+.brand-mark span:nth-child(3) {
+  height: 15px;
+  opacity: 0.84;
+}
+
+.brand-copy h1,
+.brand-copy p {
+  margin: 0;
+}
+
+.brand-copy h1 {
+  margin-top: 2px;
+  font-size: 1.16rem;
+  font-weight: 720;
+  letter-spacing: -0.035em;
+}
+
+.eyebrow {
+  color: #aaa8c8;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 8px 12px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 5%);
+  color: #d5d3e9;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6de5b2;
+  box-shadow: 0 0 12px rgb(109 229 178 / 75%);
+}
+.not-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff0404;
+  box-shadow: 0 0 12px rgb(109 229 178 / 75%);
+}
+
+.chat {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: min(100%, 320px);
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #c9c7df;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.empty-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 5px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgb(168 112 255 / 24%), rgb(73 202 211 / 14%));
+  color: #d8b7ff;
+  font-size: 1.35rem;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #f0effb;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.empty-state > span:last-child {
+  color: #a9a7c5;
+  font-size: 0.85rem;
+}
+
+.msg {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: max-content;
+  max-width: min(440px, calc(100vw - 48px));
+  padding: 12px 17px;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 18px 18px 5px 18px;
+  background: linear-gradient(135deg, #9a63f4, #7456e9);
+  box-shadow: 0 12px 35px rgb(75 46 160 / 28%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 560;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  text-align: center;
+  transform: translateX(-50%);
+  animation: rise 8s cubic-bezier(0.2, 0.65, 0.35, 1) forwards;
+  will-change: bottom, opacity;
+  pointer-events: none;
+}
+
+.msg:nth-child(3n + 2) {
+  border-radius: 18px 18px 18px 5px;
+  background: linear-gradient(135deg, #258d9b, #4b72d6);
+  box-shadow: 0 12px 35px rgb(34 112 151 / 25%);
+}
+
+.msg:nth-child(3n) {
+  background: linear-gradient(135deg, #d15b9b, #9356cf);
+  box-shadow: 0 12px 35px rgb(144 57 135 / 25%);
+}
+
+@keyframes rise {
+  0% {
+    bottom: 50%;
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  100% {
+    bottom: 100%;
+    opacity: 0;
+  }
+}
+
+.composer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  margin: 0 -28px;
+  padding: 16px 28px calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgb(255 255 255 / 9%);
+  background: linear-gradient(180deg, rgb(17 17 39 / 68%), rgb(17 17 39 / 94%));
+  backdrop-filter: blur(18px);
+}
+
+.composer input {
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  padding: 0 19px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 16px;
+  outline: none;
+  background: rgb(255 255 255 / 6%);
+  color: #fff;
+  font-size: 16px;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.composer input::placeholder {
+  color: #9290af;
+}
+
+.composer input:focus {
+  border-color: #a77aff;
+  background: rgb(255 255 255 / 9%);
+  box-shadow: 0 0 0 3px rgb(167 122 255 / 15%);
+}
+
+.composer button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 104px;
+  min-height: 50px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #a269fa, #7164f2 65%, #5688f1);
+  box-shadow: 0 8px 24px rgb(117 89 239 / 28%);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.composer button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.composer button:active {
+  transform: translateY(1px);
+}
+
+.composer button:focus-visible {
+  outline: 3px solid rgb(211 184 255 / 85%);
+  outline-offset: 3px;
+}
+
+.send-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 520px) {
+  .app {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .app-header {
+    min-height: 82px;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+  }
+
+  .composer {
+    gap: 8px;
+    margin-right: -18px;
+    margin-left: -18px;
+    padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .composer input {
+    min-height: 48px;
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .composer button {
+    min-width: 78px;
+    min-height: 48px;
+    padding: 0 12px;
+  }
+
+  .send-icon {
+    font-size: 1.1rem;
+  }
+
+  .msg {
+    max-width: calc(100vw - 36px);
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .app {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .app-header {
+    gap: 9px;
+  }
+
+  .eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+  }
+
+  .composer {
+    gap: 7px;
+    margin-right: -12px;
+    margin-left: -12px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .composer button {
+    min-width: 68px;
+    gap: 5px;
+    padding: 0 9px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-height: 520px) {
+  .app-header {
+    min-height: 62px;
+    padding: 8px 0;
+  }
+
+  .composer {
+    padding-top: 8px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .composer input,
+  .composer button {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 3s !important;
+    transition-duration: 0.01ms !important;
+  }
+}
